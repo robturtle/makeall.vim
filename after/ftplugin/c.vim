@@ -36,6 +36,7 @@ endfunc
 let b:makeall_cmakebuilddir = 'build'
 let b:makeall_binrunner = ""
 let b:makeall_cmakeroot = ""
+let b:runprg = "0"
 
 func! FindCMakeSrcRoot()
 "Find the first CMakeLists.txt which contains keyword 'PROJECT'
@@ -51,6 +52,7 @@ func! FindCMakeSrcRoot()
     else
         exe "setlocal makeprg=cmakemake.sh\\ ".builddir
         exe "let b:makeall_binrunner=\"".builddir."/\""
+        exe "let b:runprg=\"" . builddir ."/". expand("%:t:r") . "\""
     endif
 endfunc
 
@@ -68,7 +70,7 @@ endif
 
 call FindCMakeSrcRoot()
 
-nmap <F5> :call RunTarget()<cr>:<c-r>p
+nmap <F9> :call RunTarget()<cr>:<c-r>p
 
 " FIXME get rid of using of `cmakecreate.sh` scripts
 " FIXME cmake* script all conflate into plugin
